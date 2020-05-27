@@ -16,7 +16,7 @@ const waitForTransition = raf
   }
 
 class DragulaService {
-  constructor (Vue) {
+  constructor(Vue) {
     this.bags = [] // bag store
     this.eventBus = new Vue()
     this.events = [
@@ -34,7 +34,7 @@ class DragulaService {
     ]
   }
 
-  add (name, drake) {
+  add(name, drake) {
     let bag = this.find(name)
     if (bag) {
       throw new Error('Bag named: "' + name + '" already exists.')
@@ -53,7 +53,7 @@ class DragulaService {
     return bag
   }
 
-  find (name) {
+  find(name) {
     let bags = this.bags
     for (var i = 0; i < bags.length; i++) {
       if (bags[i].name === name) {
@@ -62,7 +62,7 @@ class DragulaService {
     }
   }
 
-  handleModels (name, drake) {
+  handleModels(name, drake) {
     if (drake.registered) { // do not register events twice
       return
     }
@@ -110,7 +110,7 @@ class DragulaService {
     drake.registered = true
   }
 
-  destroy (name) {
+  destroy(name) {
     let bag = this.find(name)
     if (!bag) { return }
     let bagIndex = this.bags.indexOf(bag)
@@ -118,16 +118,16 @@ class DragulaService {
     bag.drake.destroy()
   }
 
-  setOptions (name, options) {
+  setOptions(name, options) {
     let bag = this.add(name, dragula(options))
     this.handleModels(name, bag.drake)
   }
 
-  setupEvents (bag) {
+  setupEvents(bag) {
     bag.initEvents = true
     let _this = this
     let emitter = type => {
-      function replicate () {
+      function replicate() {
         let args = Array.prototype.slice.call(arguments)
         _this.eventBus.$emit(type, [bag.name].concat(args))
       }
@@ -136,18 +136,18 @@ class DragulaService {
     this.events.forEach(emitter)
   }
 
-  domIndexOf (child, parent) {
+  domIndexOf(child, parent) {
     return Array.prototype.indexOf.call(
       parent.children,
       child
     )
   }
 
-  findModelForContainer (container, drake) {
+  findModelForContainer(container, drake) {
     return (this.findModelContainerByContainer(container, drake) || {}).model
   }
 
-  findModelContainerByContainer (container, drake) {
+  findModelContainerByContainer(container, drake) {
     if (!drake.models) {
       return
     }
