@@ -4,7 +4,6 @@
   "description": "Vue wrapper for dragula",
   "main": "src/index.js",
   "files": [
-    "dist",
     "src"
   ],
   "author": "YichangLiu",
