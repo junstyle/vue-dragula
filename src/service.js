@@ -70,7 +70,7 @@ class DragulaService {
             setTimeout(() => {
                 sourceModel.splice(dragIndex, 1)
                 // drake.cancel(true)
-                this.eventBus.$emit('removeModel', [name, el, source, dragIndex])
+                this.eventBus.$emit('removeModel', { name, el, source, dragIndex })
             }, 300)
         })
 
@@ -89,7 +89,7 @@ class DragulaService {
             if (target === source) {
                 setTimeout(() => {
                     sourceModel.splice(dropIndex, 0, sourceModel.splice(dragIndex, 1)[0])
-                    this.eventBus.$emit('dropModel', [name, dropElm, target, source, dropIndex])
+                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex })
                 }, 300)
             } else {
                 let notCopy = dragElm === dropElm
@@ -101,7 +101,7 @@ class DragulaService {
                         sourceModel.splice(dragIndex, 1)
                     }
                     targetModel.splice(dropIndex, 0, dropElmModel)
-                    this.eventBus.$emit('dropModel', [name, dropElm, target, source, dropIndex])
+                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex })
                 }, 300)
                 // drake.cancel(true)
             }

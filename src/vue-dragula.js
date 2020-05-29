@@ -17,9 +17,24 @@ export default function (Vue) {
         eventBus: service.eventBus
     }
 
+    /**
+     * v-dragula="items"
+     * v-dragula="{model: items, options: {copy: true}, events: {drop: onDropEvent}}"
+     */
     Vue.directive('dragula', {
 
         bind(container, binding, vnode) {
+            let model = null
+            let bindingVal = binding.value ? binding.value : []
+            let options = { containers: [container] }
+            if (Array.isArray(bindingVal)) {
+                model = bindingVal
+            } else {
+                model = bindingVal.model ? bindingVal.model : []
+                if (bindingVal.options)
+                    options = Object.assign({}, options, bindingVal.options)
+            }
+
             const bagName = vnode.data.attrs.bag
 
             if (bagName !== undefined && bagName.length !== 0) {
@@ -29,14 +44,17 @@ export default function (Vue) {
             if (bag) {
                 drake = bag.drake
                 drake.containers.push(container)
-                drake.models.push({ model: binding.value, container })
+                drake.models.push({ model, container })
                 return
             }
 
-            drake = dragula({
-                containers: [container]
-            })
-            drake.models = [{ model: binding.value, container }]
+            drake = dragula(options)
+            if (bindingVal.events) {
+                Object.keys(bindingVal.events).map(evt => {
+                    drake.on(evt, bindingVal.events[evt])
+                })
+            }
+            drake.models = [{ model, container }]
 
             service.add(name, drake)
             service.handleModels(name, drake)
