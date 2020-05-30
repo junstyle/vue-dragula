@@ -88,21 +88,21 @@ class DragulaService {
 
             if (target === source) {
                 setTimeout(() => {
-                    let dropElmModel = sourceModel.splice(dragIndex, 1)[0]
-                    sourceModel.splice(dropIndex, 0, dropElmModel)
-                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex, dropElmModel })
+                    let dropModel = sourceModel.splice(dragIndex, 1)[0]
+                    sourceModel.splice(dropIndex, 0, dropModel)
+                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
                 }, 300)
             } else {
                 let notCopy = dragElm === dropElm
                 let targetModel = this.findModelForContainer(target, drake)
-                let dropElmModel = notCopy ? sourceModel[dragIndex] : JSON.parse(JSON.stringify(sourceModel[dragIndex]))
+                let dropModel = notCopy ? sourceModel[dragIndex] : JSON.parse(JSON.stringify(sourceModel[dragIndex]))
 
                 setTimeout(() => {
                     if (notCopy) {
                         sourceModel.splice(dragIndex, 1)
                     }
-                    targetModel.splice(dropIndex, 0, dropElmModel)
-                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex, dropElmModel })
+                    targetModel.splice(dropIndex, 0, dropModel)
+                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
                 }, 300)
                 // drake.cancel(true)
             }
