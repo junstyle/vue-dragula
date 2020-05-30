@@ -1,12 +1,15 @@
 # vue-dragula
+
 > :ok_hand: Drag and drop so simple it hurts
 
 Vue wrapper for [`dragula`][1].
 
 ## Install
-#### CommonJS
+
+### CommonJS
 
 - Available through npm as `vue-dragula`.
+
   ``` bash
   npm install vue-dragula
   ```
@@ -25,6 +28,7 @@ Vue wrapper for [`dragula`][1].
 ## Usage
 
 template:
+
 ``` html
 <div class="wrapper">
   <div class="container" v-dragula="colOne" bag="first-bag">
@@ -37,12 +41,10 @@ template:
 </div>
 ```
 
-**NOTE** Vuejs 2.x 
+**NOTE** Vuejs 2.x
 
-To make sure a correct update for DOM element order, we must provide a `key` for `v-for` directive inside a dragula container. https://vuejs.org/v2/guide/list.html#key  
+To make sure a correct update for DOM element order, we must provide a `key` for `v-for` directive inside a dragula container. https://vuejs.org/v2/guide/list.html#key
 With `v-for="item in list"`, we need `:key="item.id"` for object items, `:key="item"` for plain string.
-
-
 
 ## APIs
 
@@ -51,6 +53,7 @@ You can access them from `Vue.vueDragula`
 ### `options(name, options)`
 
 Set dragula options, refer to: https://github.com/bevacqua/dragula#optionscontainers
+
 ```js
 ...
 new Vue({
@@ -71,8 +74,8 @@ Returns the `bag` for a `drake` instance. Contains the following properties:
 - `drake` the raw `drake` instance
 
 ## Events
-For drake events, refer to: https://github.com/bevacqua/dragula#drakeon-events
 
+For drake events, refer to: https://github.com/bevacqua/dragula#drakeon-events
 
 ```js
 ...
@@ -85,12 +88,11 @@ new Vue({
 })
 ```
 
-
 ## Special Events for vue-dragula
 
 | Event Name |      Listener Arguments      |  Event Description |
 | :-------------: |:-------------:| -----|
-| dropModel | bagName, el, target, source, dropIndex | model was synced, dropIndex exposed |
-| removeModel | bagName, el, container, removeIndex | model was synced, removeIndex exposed |
+| dropModel | {bagName, el, target, source, dropIndex, dropModel} | model was synced, dropIndex exposed |
+| removeModel | {bagName, el, container, removeIndex} | model was synced, removeIndex exposed |
 
 [1]: https://github.com/bevacqua/dragula
