@@ -43,7 +43,7 @@ template:
 
 **NOTE** Vuejs 2.x
 
-To make sure a correct update for DOM element order, we must provide a `key` for `v-for` directive inside a dragula container. https://vuejs.org/v2/guide/list.html#key
+To make sure a correct update for DOM element order, we must provide a `key` for `v-for` directive inside a dragula container. <https://vuejs.org/v2/guide/list.html#key>
 With `v-for="item in list"`, we need `:key="item.id"` for object items, `:key="item"` for plain string.
 
 ## APIs
@@ -52,7 +52,7 @@ You can access them from `Vue.vueDragula`
 
 ### `options(name, options)`
 
-Set dragula options, refer to: https://github.com/bevacqua/dragula#optionscontainers
+Set dragula options, refer to: <https://github.com/bevacqua/dragula#optionscontainers>
 
 ```js
 ...
@@ -75,7 +75,7 @@ Returns the `bag` for a `drake` instance. Contains the following properties:
 
 ## Events
 
-For drake events, refer to: https://github.com/bevacqua/dragula#drakeon-events
+For drake events, refer to: <https://github.com/bevacqua/dragula#drakeon-events>
 
 ```js
 ...

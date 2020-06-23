@@ -44,6 +44,7 @@ export default function (Vue) {
             if (bag) {
                 drake = bag.drake
                 drake.containers.push(container)
+                if (drake.models == undefined) drake.models = []
                 drake.models.push({ model, container })
                 return
             }
