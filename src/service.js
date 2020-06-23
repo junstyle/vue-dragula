@@ -130,7 +130,7 @@ class DragulaService {
         let emitter = type => {
             function replicate() {
                 let args = Array.prototype.slice.call(arguments)
-                _this.eventBus.$emit(type, [bag.name].concat(args))
+                _this.eventBus.$emit(type, bag.name, ...args)
             }
             bag.drake.on(type, replicate)
         }
