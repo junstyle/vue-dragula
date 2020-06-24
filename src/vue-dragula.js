@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import dragula from 'dragula'
 import DragulaService from './service'
 
@@ -5,7 +6,7 @@ if (!dragula) {
     throw new Error('[vue-dragula] cannot locate dragula.')
 }
 
-export default function (Vue) {
+export default function () {
     const service = new DragulaService(Vue)
 
     let name = 'globalBag'
