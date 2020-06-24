@@ -1,5 +1,5 @@
 import dragula from 'dragula'
-import Vue from 'vue'
+var Vue = require('vue').default
 
 if (!dragula) {
     throw new Error('[vue-dragula] cannot locate dragula.')
