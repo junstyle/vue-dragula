@@ -96,6 +96,7 @@ export default function (Vue) {
             var containerIndex = drake.containers.indexOf(container)
             if (containerIndex > -1) {
                 drake.containers.splice(containerIndex, 1)
+                drake.models.splice(containerIndex, 1)
             }
             if (drake.containers.length === 0) {
                 service.destroy(unbindBagName)
