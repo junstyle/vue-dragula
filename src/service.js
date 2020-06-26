@@ -19,7 +19,7 @@ class DragulaService {
             'remove',
             'shadow',
             'dropModel',
-            'removeModel'
+            'removeModel',
         ]
     }
 
@@ -32,7 +32,7 @@ class DragulaService {
         }
         bag = {
             name,
-            drake
+            drake,
         }
         this.bags.push(bag)
         if (drake.models) {
