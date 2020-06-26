@@ -26,7 +26,9 @@ class DragulaService {
     add(name, drake) {
         let bag = this.find(name)
         if (bag) {
-            throw new Error('Bag named: "' + name + '" already exists.')
+            // throw new Error('Bag named: "' + name + '" already exists.')
+            console.error('Bag named: "' + name + '" already exists.')
+            return
         }
         bag = {
             name,
