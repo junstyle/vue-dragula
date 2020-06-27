@@ -45,12 +45,7 @@ class DragulaService {
     }
 
     find(name) {
-        let bags = this.bags
-        for (var i = 0; i < bags.length; i++) {
-            if (bags[i].name === name) {
-                return bags[i]
-            }
-        }
+        return this.bags.find(bag => bag.name === name)
     }
 
     handleModels(name, drake) {
@@ -71,7 +66,7 @@ class DragulaService {
             setTimeout(() => {
                 sourceModel.splice(dragIndex, 1)
                 // drake.cancel(true)
-                drake.emit('removeModel', { name, el, source, dragIndex })
+                drake.emit('removeModel', el, container, source, dragIndex)
             }, 300)
         })
 
@@ -80,21 +75,21 @@ class DragulaService {
             dragIndex = this.domIndexOf(el, source)
         })
 
-        drake.on('drop', (dropElm, target, source) => {
+        drake.on('drop', (dropEl, target, source) => {
             if (!drake.models || !target) {
                 return
             }
-            dropIndex = this.domIndexOf(dropElm, target)
+            dropIndex = this.domIndexOf(dropEl, target)
             sourceModel = this.findModelForContainer(source, drake)
 
             if (target === source) {
                 setTimeout(() => {
                     let dropModel = sourceModel.splice(dragIndex, 1)[0]
                     sourceModel.splice(dropIndex, 0, dropModel)
-                    drake.emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
+                    drake.emit('dropModel', { name, dropEl, target, source, dropIndex, dropModel })
                 }, 300)
             } else {
-                let notCopy = dragElm === dropElm
+                let notCopy = dragElm === dropEl
                 let targetModel = this.findModelForContainer(target, drake)
                 let dropModel = notCopy ? sourceModel[dragIndex] : JSON.parse(JSON.stringify(sourceModel[dragIndex]))
 
@@ -103,7 +98,7 @@ class DragulaService {
                         sourceModel.splice(dragIndex, 1)
                     }
                     targetModel.splice(dropIndex, 0, dropModel)
-                    drake.emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
+                    drake.emit('dropModel', dropEl, target, source, dropIndex, dropModel)
                 }, 300)
                 // drake.cancel(true)
             }

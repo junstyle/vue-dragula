@@ -32,6 +32,9 @@ export default {
         } else {
             drake = dragula(options)
             drake.containers.push(container)
+            drake.models = [{ model, container }]
+            bag = service.add(bagName, drake)
+
             if (bindingVal.events) {
                 Object.keys(bindingVal.events).map(evt => {
                     let handler = function () {
@@ -40,10 +43,6 @@ export default {
                     drake.on(evt, handler)
                 })
             }
-            drake.models = [{ model, container }]
-
-            service.add(bagName, drake)
-            service.handleModels(bagName, drake)
         }
     },
 
