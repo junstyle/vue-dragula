@@ -5,22 +5,22 @@ if (!dragula) {
 }
 
 class DragulaService {
-    constructor(Vue) {
+    constructor() {
         this.bags = [] // bag store
-        this.eventBus = new Vue()
-        this.events = [
-            'cancel',
-            'cloned',
-            'drag',
-            'dragend',
-            'drop',
-            'out',
-            'over',
-            'remove',
-            'shadow',
-            'dropModel',
-            'removeModel',
-        ]
+        // this.eventBus = new Vue()
+        // this.events = [
+        //     'cancel',
+        //     'cloned',
+        //     'drag',
+        //     'dragend',
+        //     'drop',
+        //     'out',
+        //     'over',
+        //     'remove',
+        //     'shadow',
+        //     'dropModel',
+        //     'removeModel',
+        // ]
     }
 
     add(name, drake) {
@@ -38,9 +38,9 @@ class DragulaService {
         if (drake.models) {
             this.handleModels(name, drake)
         }
-        if (!bag.initEvents) {
-            this.setupEvents(bag)
-        }
+        // if (!bag.initEvents) {
+        //     this.setupEvents(bag)
+        // }
         return bag
     }
 
@@ -71,7 +71,7 @@ class DragulaService {
             setTimeout(() => {
                 sourceModel.splice(dragIndex, 1)
                 // drake.cancel(true)
-                this.eventBus.$emit('removeModel', { name, el, source, dragIndex })
+                drake.emit('removeModel', { name, el, source, dragIndex })
             }, 300)
         })
 
@@ -91,7 +91,7 @@ class DragulaService {
                 setTimeout(() => {
                     let dropModel = sourceModel.splice(dragIndex, 1)[0]
                     sourceModel.splice(dropIndex, 0, dropModel)
-                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
+                    drake.emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
                 }, 300)
             } else {
                 let notCopy = dragElm === dropElm
@@ -103,7 +103,7 @@ class DragulaService {
                         sourceModel.splice(dragIndex, 1)
                     }
                     targetModel.splice(dropIndex, 0, dropModel)
-                    this.eventBus.$emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
+                    drake.emit('dropModel', { name, dropElm, target, source, dropIndex, dropModel })
                 }, 300)
                 // drake.cancel(true)
             }
@@ -120,23 +120,23 @@ class DragulaService {
         bag.drake.destroy()
     }
 
-    setOptions(name, options) {
-        let bag = this.add(name, dragula(options))
-        this.handleModels(name, bag.drake)
-    }
+    // setOptions(name, options) {
+    //     let bag = this.add(name, dragula(options))
+    //     this.handleModels(name, bag.drake)
+    // }
 
-    setupEvents(bag) {
-        bag.initEvents = true
-        let _this = this
-        let emitter = type => {
-            function replicate() {
-                let args = Array.prototype.slice.call(arguments)
-                _this.eventBus.$emit(type, bag, ...args)
-            }
-            bag.drake.on(type, replicate)
-        }
-        this.events.forEach(emitter)
-    }
+    // setupEvents(bag) {
+    //     bag.initEvents = true
+    //     let _this = this
+    //     let emitter = type => {
+    //         function replicate() {
+    //             let args = Array.prototype.slice.call(arguments)
+    //             _this.eventBus.$emit(type, bag, ...args)
+    //         }
+    //         bag.drake.on(type, replicate)
+    //     }
+    //     this.events.forEach(emitter)
+    // }
 
     domIndexOf(child, parent) {
         return Array.prototype.indexOf.call(
