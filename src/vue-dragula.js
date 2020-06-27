@@ -6,48 +6,45 @@ if (!dragula) {
 }
 
 const service = new DragulaService()
-let name = 'globalBag'
-let drake
 
 export default {
 
     bind(container, binding, vnode) {
-        let model = null
-        let bindingVal = binding.value ? binding.value : []
-        let options = { containers: [container] }
+        let model, drake, bag,
+            bindingVal = binding.value ? binding.value : [],
+            options = {},
+            bagName = vnode.data.attrs.bag || 'globalBag'
+
         if (Array.isArray(bindingVal)) {
             model = bindingVal
         } else {
             model = bindingVal.model ? bindingVal.model : []
             if (bindingVal.options)
-                options = Object.assign({}, options, bindingVal.options)
+                Object.assign(options, bindingVal.options)
         }
 
-        const bagName = vnode.data.attrs.bag
-
-        if (bagName !== undefined && bagName.length !== 0) {
-            name = bagName
-        }
-        const bag = service.find(name)
+        bag = service.find(bagName)
         if (bag) {
             drake = bag.drake
             drake.containers.push(container)
             drake.setOptions(options)
-            if (drake.models == undefined) drake.models = []
             drake.models.push({ model, container })
-            return
-        }
+        } else {
+            drake = dragula(options)
+            drake.containers.push(container)
+            if (bindingVal.events) {
+                Object.keys(bindingVal.events).map(evt => {
+                    let handler = function () {
+                        bindingVal.events[evt](bag, ...arguments)
+                    }
+                    drake.on(evt, handler)
+                })
+            }
+            drake.models = [{ model, container }]
 
-        drake = dragula(options)
-        if (bindingVal.events) {
-            Object.keys(bindingVal.events).map(evt => {
-                drake.on(evt, bindingVal.events[evt])
-            })
+            service.add(bagName, drake)
+            service.handleModels(bagName, drake)
         }
-        drake.models = [{ model, container }]
-
-        service.add(name, drake)
-        service.handleModels(name, drake)
     },
 
     // update(container, binding, vnode) {
@@ -74,15 +71,12 @@ export default {
     // },
 
     unbind(container, binding, vnode) {
-        let unbindBagName = 'globalBag'
-        const bagName = vnode.data.attrs.bag
+        let unbindBagName = vnode.data.attrs.bag || 'globalBag'
 
-        if (bagName !== undefined && bagName.length !== 0) {
-            unbindBagName = bagName
-        }
-        var drake = service.find(unbindBagName).drake
+        let drake = service.find(unbindBagName).drake
         if (!drake) return
-        var containerIndex = drake.containers.indexOf(container)
+
+        let containerIndex = drake.containers.indexOf(container)
         if (containerIndex > -1) {
             drake.containers.splice(containerIndex, 1)
             drake.models.splice(containerIndex, 1)
