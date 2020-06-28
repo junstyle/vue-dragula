@@ -86,7 +86,7 @@ class DragulaService {
                 setTimeout(() => {
                     let dropModel = sourceModel.splice(dragIndex, 1)[0]
                     sourceModel.splice(dropIndex, 0, dropModel)
-                    drake.emit('dropModel', { name, el, target, source, dropIndex, dropModel })
+                    drake.emit('dropModel', el, target, source, dropIndex, dropModel)
                 }, 300)
             } else {
                 let notCopy = dragElm === el
