@@ -72,7 +72,7 @@ class DragulaService {
 
         drake.on('drag', (el, source) => {
             dragElm = el
-            dragIndex = this.domIndexOf(el, source)
+            dragIndex = Array.from(source.children).filter(c => drake.movable(c, source, c)).indexOf(el)
         })
 
         drake.on('drop', (el, target, source) => {
