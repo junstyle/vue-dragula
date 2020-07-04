@@ -31,6 +31,8 @@ export default {
             drake.models.push({ model, container })
         } else {
             drake = dragula(options)
+            drake.movable = options.movable || function () { return true }
+            delete options.movable
             drake.containers.push(container)
             drake.models = [{ model, container }]
             bag = service.add(bagName, drake)
