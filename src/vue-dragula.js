@@ -31,7 +31,7 @@ export default {
             drake.models.push({ model, container })
         } else {
             drake = dragula(options)
-            drake.movable = options.movable || function () { return true }
+            drake.movable = options.movable || function () { return true }  //不同于dragula的moves设置项，它是用来准确获取dragIndex
             delete options.movable
             drake.containers.push(container)
             drake.models = [{ model, container }]
