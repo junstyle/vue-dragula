@@ -74,7 +74,7 @@ export default {
     unbind(container, binding, vnode) {
         let unbindBagName = vnode.data.attrs.bag || 'globalBag'
 
-        let drake = service.find(unbindBagName).drake
+        let drake = (service.find(unbindBagName) || {}).drake
         if (!drake) return
 
         let containerIndex = drake.containers.indexOf(container)
